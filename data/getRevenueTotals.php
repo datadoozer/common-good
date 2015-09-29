@@ -1,6 +1,9 @@
 <?php
 
-	require_once("connect.php")
+    $username = ""; 
+    $password = "";   
+    $host = "";
+    $database="";
 	
    $org = $_POST["org"];
   

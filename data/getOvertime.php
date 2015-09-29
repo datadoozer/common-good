@@ -1,6 +1,9 @@
 <?php
 
-	require_once("connect.php")
+    $username = ""; 
+    $password = "";   
+    $host = "";
+    $database="";
 	
 	$query = "SELECT *
 			  FROM bls_qcew";

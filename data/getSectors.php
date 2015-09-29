@@ -1,6 +1,9 @@
 <?php
 
-   require_once("connect.php")
+    $username = ""; 
+    $password = "";   
+    $host = "";
+    $database="";
 	
 	$query = "SELECT DISTINCT IF( major_category_title IS NULL 
 				OR major_category_title LIKE  '%unknow%',  'Unknown', IF( major_category_id

@@ -1,6 +1,9 @@
 <?php
 
-	require_once("connect.php")
+    $username = ""; 
+    $password = "";   
+    $host = "";
+    $database="";
 	
 	$query = "SELECT distinct county, count(*) as n, sum(income_amt) as inc 
 			  FROM `town_to_county_crosswalk` c 

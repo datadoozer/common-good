@@ -1,10 +1,13 @@
 <?php
 
-    require_once("connect.php")
+    $username = ""; 
+    $password = "";   
+    $host = "";
+    $database="";
 	
 	$query = "SELECT count(*) as n FROM `data_eo_bmf`;";
-	
-	$mysqli = new mysqli("$host", "$username", "$password", "$database");
+
+	$mysqli = new mysqli($sql_details["$host"], $sql_details["$user"], $sql_details["$pass"], $sql_details["$db"]);
 	
 	if ($mysqli->connect_errno) {
 		echo "Failed to connect: " . $mysqli->connect_errno . " " . $mysqli->connect_error;
