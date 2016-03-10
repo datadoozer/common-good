@@ -6,16 +6,14 @@
     $database="";
 	
 	$query = "SELECT DISTINCT IF( major_category_title IS NULL 
-				OR major_category_title LIKE  '%unknow%',  'Unknown', IF( major_category_id
-				IN ( 4, 5 ) ,  'Health & Human Services', major_category_title ) ) AS sector, COUNT( * ) AS n, SUM( income_amt ) AS inc
+				OR major_category_title LIKE  '%unknow%',  'Unknown/Other', major_category_title ) AS sector, COUNT( * ) AS n, SUM( income_amt ) AS inc
 				FROM data_eo_bmf AS d
 				LEFT JOIN ntee_major_groups g ON LEFT( d.ntee_cd, 1 ) = g.group_letter
 				LEFT JOIN ntee_major_categories c ON g.group_category = c.major_category_id
 				WHERE foundation NOT 
 				IN ( 0, 2, 3, 4 ) 
 				GROUP BY IF( major_category_title IS NULL 
-				OR major_category_title LIKE  '%unknow%',  'Unknown', IF( major_category_id
-				IN ( 4, 5 ) ,  'Health & Human Services', major_category_title ) ) 
+				OR major_category_title LIKE  '%unknow%',  'Unknown/Other', major_category_title )
 				ORDER BY IF( ntee_cd =  ''
 				OR ntee_cd IS NULL ,  'Z', LEFT( ntee_cd, 1 ) ) ";
 	

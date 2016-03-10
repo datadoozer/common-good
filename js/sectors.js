@@ -15,7 +15,7 @@ var data;
 
 var sectors_view_width = $("#mainCol").width();
 
-var margin_sectors = {top: 30, right: sectors_view_width*.10, bottom: 30, left: sectors_view_width*.3},
+var margin_sectors = {top: 30, right: sectors_view_width*.10, bottom: 30, left: sectors_view_width*.35},
     width_sectors = sectors_view_width - margin_sectors.left - margin_sectors.right,
     height_sectors = 500 - margin_sectors.top - margin_sectors.bottom;
 
@@ -29,14 +29,15 @@ var svg_sectors = d3.select("#sectorschart")
    .append("g")
     .attr("transform", "translate(" + margin_sectors.left + "," + margin_sectors.top + ")");
 
-var sectors_y_values = ["Arts, Culture, and Humanities", "Education", "Environment and Animals",
-						"Health & Human Services","International, Foreign Affairs",
-						"Public, Societal Benefit","Religion Related", "Mutual/Membership Benefit",
-						"Unknown"];	
+var sectors_y_values;
+// = ["Animal/Animal Rights", "Arts and Culture", "Education",
+//						"Environment", "Civil Rights/Social Justice", "Community/Economic Development",
+//						"Foundation/Giving Programs","Health and Human Services", "International Affairs",
+//						"Affordable Housing/Homelessness", "Hunger/Food Security and Agriculture", "Religious/Spiritual",
+//						"Unknown/Other"];	
 
 var y_sectors = d3.scale.ordinal()
-	.rangeRoundBands([0, height_sectors], .25)
-	.domain(sectors_y_values);
+	.rangeRoundBands([0, height_sectors], .25);
 
 var x_sectors = d3.scale.linear()
 	.range([0, width_sectors])
@@ -48,19 +49,9 @@ var xAxis_sectors = d3.svg.axis()
 	.orient("top")
 	.ticks(4, "%");
 	
-var yAxis_sectors = d3.svg.axis()
-	.scale(y_sectors)
-	.orient("left")
-	
 svg_sectors.append("g")
 	.attr("class", "x axis")
-	.call(xAxis_sectors);
-
-svg_sectors.append("g")
-	.attr("class", "y axis")
-	.call(yAxis_sectors);
-  //.selectAll(".tick text")
-	//.call(wrap, y_sectors.rangeBand());		
+	.call(xAxis_sectors);	
 	
 	$.ajax({
 		type: "POST",
@@ -69,6 +60,20 @@ svg_sectors.append("g")
 		success: function (response) {
 			
 			data = JSON.parse(response);
+			
+			sectors_y_values = d3.map(data, function(d){return d.sector;}).keys();
+			
+			y_sectors.domain(sectors_y_values);
+			
+			var yAxis_sectors = d3.svg.axis()
+				.scale(y_sectors)
+				.orient("left")
+			
+			svg_sectors.append("g")
+				.attr("class", "y axis")
+				.call(yAxis_sectors);
+			  //.selectAll(".tick text")
+				//.call(wrap, y_sectors.rangeBand());				
 			
 			svg_sectors.selectAll(".sectorsBar")
 				.data(data)
